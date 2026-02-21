@@ -5,19 +5,7 @@ import (
 	"fmt"
 )
 
-type locationListResponse struct {
-	Count	int `json:"count"`
-	Next	string `json:"next"`
-	Previous string `json:"previous"`
-	Results []locationListItem `json:"results"`
-}
-
-type locationListItem struct {
-	Name string `json:"name"`
-	Url string `json:"url"`
-}
-
-func commandMap(config *config) error {
+func commandMap(config *config, args ...string) error {
 	locationResponse, err := config.Client.ListLocations(config.Next)
 	if err != nil {
 		return err
@@ -33,7 +21,7 @@ func commandMap(config *config) error {
 	return nil
 }
 
-func commandMapB(config *config) error {
+func commandMapB(config *config, args ...string) error {
 	if config.Previous == nil {
 		return errors.New("you're on the first page.")
 	}

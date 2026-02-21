@@ -5,22 +5,19 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/stwaldo/pokedexcli/internal/pokecache"
 )
 
-func (c *Client) ListLocations(pageUrl *string, cache *pokecache.Cache) (ResponseShallowLocations, error) {
+func (c *Client) ListLocations(pageUrl *string) (ResponseShallowLocations, error) {
 	url := baseURL + "/location-area"
 	if pageUrl != nil {
 		url = *pageUrl
 	}
 
-	if cache != nil {
-		if cached, exists := cache.Get(url); exists {
-			locationResponse := ResponseShallowLocations{}
-			err := json.Unmarshal(cached, &locationResponse)
-			if err == nil {
-				return locationResponse, nil
-			}
+	if cached, exists := c.cache.Get(url); exists {
+		locationResponse := ResponseShallowLocations{}
+		err := json.Unmarshal(cached, &locationResponse)
+		if err == nil {
+			return locationResponse, nil
 		}
 	}
 
@@ -46,9 +43,7 @@ func (c *Client) ListLocations(pageUrl *string, cache *pokecache.Cache) (Respons
 		return ResponseShallowLocations{}, err
 	}
 
-	if cache != nil {
-		cache.Add(url, data)
-	}
+	c.cache.Add(url, data)
 
 	return locationResponse, nil
 }

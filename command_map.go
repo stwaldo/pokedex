@@ -18,7 +18,7 @@ type locationListItem struct {
 }
 
 func commandMap(config *config) error {
-	locationResponse, err := config.Client.ListLocations(config.Next, config.Cache)
+	locationResponse, err := config.Client.ListLocations(config.Next)
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func commandMapB(config *config) error {
 		return errors.New("you're on the first page.")
 	}
 
-	locationResponse, err := config.Client.ListLocations(config.Previous, config.Cache)
+	locationResponse, err := config.Client.ListLocations(config.Previous)
 	if err != nil {
 		return err
 	}

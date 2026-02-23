@@ -71,6 +71,11 @@ func getCommands() map[string]cliCommand {
 			description: "Displays pokemon found in a given location. Usage: explore [location name]",
 			callback: commmandExplore,
 		},
+		"catch": {
+			name: "catch",
+			description: "Attempts to catch a pokemon. Usage: catch [pokemon name]",
+			callback: commandCatch,
+		},
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
@@ -83,4 +88,5 @@ type config struct {
 	Next     *string
 	Previous *string
 	Client pokeapi.Client
+	Pokedex map[string]pokeapi.Pokemon
 }

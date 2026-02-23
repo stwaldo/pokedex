@@ -45,8 +45,6 @@ func (c *Client) ListPokemonAreas(locationArea string) (ResponseLocationArea, er
 		return ResponseLocationArea{}, err
 	}
 
-	fmt.Printf("Parsed response: %+v\n", locationAreaResponse)
-
 	c.cache.Add(url, data)
 
 	return locationAreaResponse, nil
